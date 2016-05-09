@@ -1,0 +1,17 @@
+<div class="text-center" ng-controller="CreateCtrl as create">
+    <h1>{{ create.title }}</h1>
+    <form ng-submit="create.submit()" method="post">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-group" ng-hide="create.created">
+                <input type="text" class="form-control" ng-model="create.question" placeholder="Poll question" required>
+            </div>
+            <div ng-show="create.response" class="alert alert-{{ create.alert }}">{{ create.responseMessage }}</div>
+            <div class="form-group" ng-repeat="input in create.inputs track by $index">
+                <input ng-hide="create.created" type="text" class="form-control" ng-model="create.values[$index]" ng-focus="create.addOne(input)" ng-keyup="create.removeLast(input, create.values, $event)" ng-blur="create.removeLast(input, create.values, $event)" placeholder="Option {{$index+1}}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary col-md-8 col-md-offset-2">Create</button>
+            </div>
+        </div>
+    </form>
+</div>

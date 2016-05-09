@@ -1,0 +1,33 @@
+{
+  "name": "voting",
+  "version": "1.0.0",
+  "description": "voting app project - free code camp",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "crypto-js": "^3.1.6",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^6.2.0",
+    "moment": "^2.13.0",
+    "mongodb": "^2.1.18",
+    "mongoose": "^4.4.14",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pitazo/voting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pitazo/voting/issues"
+  },
+  "homepage": "https://github.com/pitazo/voting#readme"
+}
