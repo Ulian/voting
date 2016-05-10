@@ -40,7 +40,6 @@ app.factory('AuthService', ['$q', '$timeout', '$http', function($q, $timeout, $h
                     user = true
                     deferred.resolve(data)
                 } else {
-                    console.log('no')
                     user = false
                     deferred.reject(data)
                 }

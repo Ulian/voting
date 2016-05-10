@@ -13,13 +13,11 @@ app.controller('LoginCtrl', ['AuthService', '$location', function(AuthService, $
                 $location.path('/polls')
                 form = {}
             }, function(data) {
-                console.log(data)
                 form = {}
                 self.error = true
                 self.errorMessage = data.message
             })
             .catch(function (data) {
-                console.log(data)
                 form = {}
                 self.error = true
                 self.errorMessage = 'A problem ocurred'

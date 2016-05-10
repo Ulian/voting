@@ -62,7 +62,7 @@ module.exports = (function() {
 			});
 			
 			var protocol = (req.headers['x-forwarded-proto'] === 'https') ? true : false
-			console.log(protocol)
+
 			res.cookie('token', token, { expires: moment().add('1', 'y').toDate(), secure: protocol, httpOnly: true });
 			
 			res.status(200).json({'message': 'User logged in'})
