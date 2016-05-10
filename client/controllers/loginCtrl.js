@@ -12,11 +12,17 @@ app.controller('LoginCtrl', ['AuthService', '$location', function(AuthService, $
             .then(function () {
                 $location.path('/polls')
                 form = {}
-            })
-            .catch(function (data) {
+            }, function(data) {
+                console.log(data)
                 form = {}
                 self.error = true
                 self.errorMessage = data.message
+            })
+            .catch(function (data) {
+                console.log(data)
+                form = {}
+                self.error = true
+                self.errorMessage = 'A problem ocurred'
             });
     };
 
