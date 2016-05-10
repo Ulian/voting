@@ -37,7 +37,6 @@ app.factory('AuthService', ['$q', '$timeout', '$http', function($q, $timeout, $h
         $http.post('/api/login', { login: user, password: password })
             .success(function(data, status) {
                 if(status === 200) {
-                    console.log('si')
                     user = true
                     deferred.resolve(data)
                 } else {

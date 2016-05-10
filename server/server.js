@@ -2,12 +2,11 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var path = require('path')
-//var passport = require('passport')
-//var CryptoJS = require('crypto-js')
-//var jwt = require('jsonwebtoken');
-var cookieParser = require('cookie-parser')
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT
+var ipadress = process.env.IP || process.env.OPENSHIFT_NODEJS_IP
+
+var cookieParser = require('cookie-parser')
 
 mongoose.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@ds011732.mlab.com:11732/voting')
 
@@ -25,6 +24,6 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP, function() {
-	console.log('Listen at port ' + process.env.OPENSHIFT_NODEJS_PORT)
+app.listen(port, ipadress, function() {
+	console.log('Server at ' + ipadress + ':' + port)
 })
