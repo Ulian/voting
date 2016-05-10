@@ -25,6 +25,6 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT, function() {
+app.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP, function() {
 	console.log('Listen at port ' + process.env.OPENSHIFT_NODEJS_PORT)
 })
