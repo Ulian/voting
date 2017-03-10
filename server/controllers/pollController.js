@@ -46,8 +46,8 @@ pollMethods.create = (req, res) => {
   if (repeat.length !== optionsArray.length) return
 
   const poll = new Poll({
-    title: title,
-    owner: owner,
+    title,
+    owner,
     options: optionsArray
   })
 
@@ -72,13 +72,15 @@ pollMethods.getById = (req, res) => {
 }
 
 pollMethods.addOption = (req, res) => {
-  const { option } = req.body
+  const { option: name } = req.body
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Poll not found'})
-      if (checkRepeatedHelper.option(poll.options, option) !== -1) return res.status(400).json({'message': 'Option cannot be repeated'})
+      if (checkRepeatedHelper.option(poll.options, name) !== -1) return res.status(400).json({'message': 'Option cannot be repeated'})
 
-      poll.options.push({name: option})
+      poll.options.push({
+        name
+      })
 
       poll.save(function (error) {
         if (error) return res.status(400).json({'message': 'An error ocurred'})
@@ -117,8 +119,8 @@ pollMethods.delete = (req, res) => {
 
 pollMethods.vote = (req, res) => {
   const { token } = req.cookies
-  const optionVoted = req.params.option
-  const ipAddress = req.headers['x-forwarded-for']
+  const { option: optionVoted } = req.params
+  const { ipAddress } = req.headers['x-forwarded-for']
   let user = null
 
   if (token !== undefined) {

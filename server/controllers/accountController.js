@@ -23,13 +23,13 @@ accountMethods.register = (req, res) => {
     return res.status(400).json({'message': 'Password need to be at least 6 characters'})
   }
 
-  User.findOne({ $or: [{username: username}, {email: email}] })
+  User.findOne({ $or: [{username}, {email}] })
     .then(user => {
       if (user) return res.status(400).json({'message': 'Username or email in use'})
 
       const account = new User({
-        username: username,
-        email: email,
+        username,
+        email,
         password: CryptoJS.AES.encrypt(password, config.DATABASE.SECRET)
       })
 
