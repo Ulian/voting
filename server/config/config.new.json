@@ -1,0 +1,12 @@
+{
+  "SERVER": {
+    "PORT": 80,
+    "IP": "127.0.0.1"
+  },
+  "DATABASE": {
+    "USER": "",
+    "PASS": "",
+    "HOST": "",
+    "SECRET": ""
+  }
+}

@@ -1,8 +1,8 @@
 {
   "name": "voting",
   "version": "1.0.0",
-  "description": "voting app project - free code camp",
-  "main": "index.js",
+  "description": "Una aplicación para realizar encuestas",
+  "main": "server/server.js",
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
@@ -16,20 +16,24 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js"
   },
-  "main": "server/server.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pitazo/voting.git"
-  },
-  "author": "",
+  "author": "Ulian",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pitazo/voting/issues"
+    "url": "https://github.com/pitazo/Ulian/issues"
   },
-  "homepage": "https://github.com/pitazo/voting#readme"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ulian/voting.git"
+  },
+  "homepage": "https://github.com/Ulian/voting#readme"
 }
