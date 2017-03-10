@@ -10,6 +10,7 @@ const port = config.SERVER.PORT
 const ip = config.SERVER.IP
 
 mongoose.connect(`mongodb://${config.DATABASE.USER}:${config.DATABASE.PASS}@${config.DATABASE.HOST}`)
+mongoose.Promise = global.Promise
 
 let app = express()
 

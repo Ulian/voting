@@ -18,16 +18,15 @@ pollMethods.getPolls = (req, res) => {
 }
 
 pollMethods.create = (req, res) => {
-  const token = req.cookies.token
+  const { token } = req.cookies
   if (token === undefined) {
     return res.status(400).json({'message': 'You need to be logged'})
   }
 
   const user = userHelper.getUser(token)
 
-  const title = req.body.title
+  const { title, options } = req.body
   const owner = user._id
-  const options = req.body.options
   const optionsArray = []
 
   options.split(',').map(option => {
@@ -73,7 +72,7 @@ pollMethods.getById = (req, res) => {
 }
 
 pollMethods.addOption = (req, res) => {
-  const option = req.body.option
+  const { option } = req.body
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Poll not found'})
@@ -92,7 +91,7 @@ pollMethods.addOption = (req, res) => {
 }
 
 pollMethods.delete = (req, res) => {
-  const token = req.cookies.token
+  const { token } = req.cookies
 
   if (token !== undefined) {
     const user = userHelper.getUser(token)
@@ -117,7 +116,7 @@ pollMethods.delete = (req, res) => {
 }
 
 pollMethods.vote = (req, res) => {
-  const token = req.cookies.token
+  const { token } = req.cookies
   const optionVoted = req.params.option
   const ipAddress = req.headers['x-forwarded-for']
   let user = null

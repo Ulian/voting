@@ -6,13 +6,14 @@ const config = require('../config/config.json')
 const User = require('../models/user')
 const Poll = require('../models/poll')
 
+const userHelper = require('../helpers/getUser')
+
 const accountMethods = {}
 
 accountMethods.register = (req, res) => {
-  const username = req.body.username.toLowerCase()
-  const email = req.body.email.toLowerCase()
-  const password = req.body.password
-  const passwordRepeat = req.body.passwordRepeat
+  let { username, email, password, passwordRepeat } = req.body
+  username = username.toLowerCase()
+  email = email.toLowerCase()
 
   if (password !== passwordRepeat) {
     return res.status(400).json({'message': 'Password didnt match'})
@@ -46,8 +47,8 @@ accountMethods.register = (req, res) => {
 }
 
 accountMethods.login = (req, res) => {
-  const login = req.body.login.toLowerCase()
-  const password = req.body.password
+  let { login, password } = req.body
+  login = login.toLowerCase()
 
   User.findOne({$or: [{username: login}, {email: login}]})
     .then(user => {
@@ -72,9 +73,9 @@ accountMethods.login = (req, res) => {
 }
 
 accountMethods.status = (req, res) => {
-  const token = req.cookies.token
+  const { token } = req.cookies
   if (token !== undefined) {
-    const user = getUser(req.cookies.token)
+    const user = userHelper.getUser(req.cookies.token)
     Poll.find({ $query: {owner: user._id}, $orderby: { created: -1 } })
       .then(polls => {
         return res.status(200).json({_id: user._id, username: user.username, email: user.email, polls: polls})
@@ -83,11 +84,6 @@ accountMethods.status = (req, res) => {
         return res.status(400).json({'message': error})
       })
   } else return res.status(400).json({'message': 'You need to be logged'})
-}
-
-let getUser = token => {
-  const decoded = jwt.verify(token, config.DATABASE.SECRET)
-  return decoded._doc
 }
 
 module.exports = accountMethods
