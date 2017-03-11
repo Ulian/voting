@@ -29,8 +29,8 @@ pollMethods.create = (req, res) => {
   const owner = user._id
   const optionsArray = []
 
-  options.split(',').map(option => {
-    return optionsArray.push({ name: option })
+  options.split(',').map(name => {
+    return optionsArray.push({ name })
   })
 
   if (title.length < 5) return res.status(400).json({'message': 'Title need to be at least 5 characters'})
@@ -76,7 +76,7 @@ pollMethods.addOption = (req, res) => {
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Poll not found'})
-      if (checkRepeatedHelper.option(poll.options, name) !== -1) return res.status(400).json({'message': 'Option cannot be repeated'})
+      if (checkRepeatedHelper.isOptionRepeated(poll.options, name)) return res.status(400).json({'message': 'Option cannot be repeated'})
 
       poll.options.push({
         name
@@ -120,7 +120,8 @@ pollMethods.delete = (req, res) => {
 pollMethods.vote = (req, res) => {
   const { token } = req.cookies
   const { option: optionVoted } = req.params
-  const { ipAddress } = req.headers['x-forwarded-for']
+  const ipAddress = req.headers['x-forwarded-for']
+
   let user = null
 
   if (token !== undefined) {
@@ -131,7 +132,7 @@ pollMethods.vote = (req, res) => {
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Invalid poll'})
-      if (checkRepeatedHelper.vote(poll.options, user, ipAddress) !== -1) return res.status(400).json({'message': 'You already vote in this poll'})
+      if (checkRepeatedHelper.isVoteRepeated(poll.options, user, ipAddress)) return res.status(400).json({'message': 'You already vote in this poll'})
 
       poll.options.forEach((option, index) => {
         if (option.name === optionVoted) {

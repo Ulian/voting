@@ -4,3 +4,4 @@ Esta aplicación permite la realización de encuestas aceptando un voto por dire
 ## TODO
 - [ ] Pasar de Angular 1 a Angular 2.
 - [ ] Internalización de idioma.
+- [ ] Añadir tests.
