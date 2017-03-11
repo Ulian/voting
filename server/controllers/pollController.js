@@ -1,3 +1,4 @@
+const requestIp = require('request-ip')
 const mongoose = require('mongoose')
 
 const Poll = require('../models/poll')
@@ -120,8 +121,7 @@ pollMethods.delete = (req, res) => {
 pollMethods.vote = (req, res) => {
   const { token } = req.cookies
   const { option: optionVoted } = req.params
-  const ipAddress = req.headers['x-forwarded-for']
-
+  const ipAddress = requestIp.getClientIp(req)
   let user = null
 
   if (token !== undefined) {
