@@ -3,9 +3,12 @@ exports.isOptionRepeated = (options, option) => {
 }
 
 exports.isVoteRepeated = (options, user, ip) => {
-  let found = 0
+  let found = false
   options.every(option => {
-    found = !(option.votes.find(vote => (vote.voter === user && vote.voter !== undefined) || vote.ip_adress === ip) === undefined)
+    option.votes.every(vote => {
+      found = (vote.voter === user && vote.voter !== undefined) || vote.ip_address === ip
+      return !found
+    })
     return !found
   })
   return found

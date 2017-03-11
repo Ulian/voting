@@ -9,10 +9,10 @@
                 <div ng-show="poll.added" class="alert alert-{{ poll.alert }}">{{ poll.addedMessage }}</div>
                 <ul class="list-group">
                     <a href="" ng-repeat="item in poll.options" ng-click="poll.vote(item.name)" class="list-group-item">{{ item.name }} <span class="badge"> {{ item.votes.length }}</span></a>
-                </ul>            
+                </ul>
 
 
-                <div ng-show="poll.optionAdded" class="alert alert-{{ poll.optionAlert }}">{{ poll.optionAddedMessage }}</div>                
+                <div ng-show="poll.optionAdded" class="alert alert-{{ poll.optionAlert }}">{{ poll.optionAddedMessage }}</div>
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="poll.newOption"placeholder="New option">
                     <span class="input-group-btn">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <canvas id="base" class="chart chart-base" chart-type="poll.type" chart-data="poll.data" chart-labels="poll.labels" chart-legend="true"></canvas>            
+                <canvas id="base" class="chart chart-base" chart-type="poll.type" chart-data="poll.data" chart-labels="poll.labels" chart-legend="true"></canvas>
             </div>
         </div>
     </div>
