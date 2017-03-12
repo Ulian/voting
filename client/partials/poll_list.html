@@ -1,6 +1,6 @@
 <div ng-controller="PollsCtrl as poll">
-    <h1>{{ poll.title }}</h1>
-    <div class="list-group">
-        <a ng-repeat="item in poll.list" href="#/poll/{{ item._id }}" class="list-group-item">{{ item.title }} <span class="label label-primary pull-right" am-time-ago="item.created">{{ item.created }} </span></a>
-    </div>
+  <h1>{{ poll.title }}</h1>
+  <div class="list-group">
+    <a ng-repeat="item in poll.list" href="#/poll/{{ item._id }}" class="list-group-item">{{ item.title }} <span class="label label-primary pull-right" am-time-ago="item.created">{{ item.created }} </span></a>
+  </div>
 </div>

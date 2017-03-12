@@ -3,22 +3,20 @@ var app = angular.module('app')
 app.controller('LoginCtrl', ['AuthService', '$location', function (AuthService, $location) {
   this.title = 'Login'
 
-  var self = this
-
-  this.submit = function (form) {
+  this.submit = form => {
     AuthService.login(form.name, form.password)
-      .then(function () {
+      .then(() => {
         $location.path('/polls')
         form = {}
-      }, function (data) {
+      }, (data) => {
         form = {}
-        self.error = true
-        self.errorMessage = data.message
+        this.error = true
+        this.errorMessage = data.message
       })
-      .catch(function (data) {
+      .catch(() => {
         form = {}
-        self.error = true
-        self.errorMessage = 'A problem ocurred'
+        this.error = true
+        this.errorMessage = 'A problem ocurred'
       })
   }
 }])

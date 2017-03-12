@@ -1,6 +1,6 @@
 <div ng-controller="ProfileCtrl as profile">
-    <h1>{{ profile.name}}'s {{ profile.title }}</h1>
-    <div class="list-group">
-        <a ng-repeat="item in profile.list" href="#/poll/{{ item._id }}" class="list-group-item">{{ item.title }} <span class="label label-primary pull-right" am-time-ago="item.created">{{ item.created }} </span></a>
-    </div>
+  <h1>{{ profile.name}}'s {{ profile.title }}</h1>
+  <div class="list-group">
+    <a ng-repeat="item in profile.list" href="#/poll/{{ item._id }}" class="list-group-item">{{ item.title }} <span class="label label-primary pull-right" am-time-ago="item.created">{{ item.created }} </span></a>
+  </div>
 </div>

@@ -9,7 +9,6 @@ const checkRepeatedHelper = require('../helpers/checkRepeated')
 const pollMethods = {}
 
 pollMethods.getPolls = (req, res) => {
-  console.log('test')
   Poll.find({ $query: {}, $orderby: { created: -1 } })
     .then(polls => {
       return res.status(200).json(polls)

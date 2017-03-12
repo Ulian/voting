@@ -3,81 +3,76 @@ var app = angular.module('app')
 app.controller('PollCtrl', ['$routeParams', '$http', '$location', '$route', function ($routeParams, $http, $location, $route) {
   this.angularEquals = angular.equals
 
-  this.id = $routeParams.id
-  var self = this
-
   this.share = encodeURIComponent($location.absUrl())
 
   this.labels = []
   this.data = []
 
-  this.test = function () {
+  this.load = function () {
     $http.get('/api/poll/' + $routeParams.id)
-      .then(function (data) {
-        var poll = data.data
-        self.title = poll.title
-        self.owner = poll.owner
-        self.options = poll.options
-        self.type = 'Pie'
-        self.labels = []
-        self.data = []
-        self.options.forEach(function (option) {
-          self.labels.push(option.name)
-          self.data.push(option.votes.length)
+      .then(data => {
+        const poll = data.data
+        this.title = poll.title
+        this.owner = poll.owner
+        this.options = poll.options
+        this.type = 'Pie'
+        this.labels = []
+        this.data = []
+        this.options.forEach(option => {
+          this.labels.push(option.name)
+          this.data.push(option.votes.length)
         })
       })
   }
 
-  this.test()
+  this.load()
 
-  this.vote = function (vote) {
-    $http.post('/api/poll/' + $routeParams.id + '/' + vote)
-      .then(function (data) {
+  this.vote = vote => {
+    $http.post(`/api/poll/${$routeParams.id}/${vote}`)
+      .then(data => {
         if (data.status === 201) {
-          self.test()
-          self.added = true
-          self.addedMessage = 'Your vote was submited'
-          self.alert = 'success'
+          this.load()
+          this.added = true
+          this.addedMessage = 'Your vote was submited'
+          this.alert = 'success'
         }
-      },
-      function (data) {
-        self.added = true
-        self.addedMessage = 'You already vote in this poll'
-        self.alert = 'danger'
+      }, () => {
+        this.added = true
+        this.addedMessage = 'You already vote in this poll'
+        this.alert = 'danger'
       })
   }
 
-  this.remove = function (poll) {
-    $http.delete('/api/poll/' + poll)
-      .then(function (response) {
+  this.remove = () => {
+    $http.delete(`/api/poll/${$routeParams.id}`)
+      .then(() => {
         $location.path('/profile')
         $route.reload()
       },
-      function (response) {
-        self.added = true
-        self.addedMessage = 'Is not your poll'
-        self.alert = 'danger'
+      () => {
+        this.added = true
+        this.addedMessage = 'Is not your poll'
+        this.alert = 'danger'
       })
   }
 
-  this.addOption = function (option) {
-    $http.post('/api/poll/' + $routeParams.id, {option: option})
-      .then(function (response) {
+  this.addOption = option => {
+    $http.post(`/api/poll/${$routeParams.id}`, { option })
+      .then(response => {
         if (response.status === 201) {
-          self.optionAdded = true
-          self.optionAddedMessage = 'Option added'
-          self.optionAlert = 'success'
-          self.test()
+          this.optionAdded = true
+          this.optionAddedMessage = 'Option added'
+          this.optionAlert = 'success'
+          this.load()
         } else {
-          self.optionAdded = true
-          self.optionAddedMessage = 'Option cannot be added'
-          self.optionAlert = 'danger'
+          this.optionAdded = true
+          this.optionAddedMessage = 'Option cannot be added'
+          this.optionAlert = 'danger'
         }
-      }, function (error) {
-        console.log(error)
-        self.optionAdded = true
-        self.optionAddedMessage = 'Option cannot be added'
-        self.optionAlert = 'danger'
+      }, () => {
+        this.optionAdded = true
+        this.optionAddedMessage = 'Option cannot be added'
+        this.optionAlert = 'danger'
       })
   }
 }])

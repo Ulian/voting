@@ -9,7 +9,10 @@ const config = require('./config/config.json')
 const port = config.SERVER.PORT
 const ip = config.SERVER.IP
 
-mongoose.connect(`mongodb://${config.DATABASE.USER}:${config.DATABASE.PASS}@${config.DATABASE.HOST}`)
+mongoose.connect(`mongodb://${config.DATABASE.USER}:${config.DATABASE.PASS}@${config.DATABASE.HOST}`, {
+  server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
+})
 mongoose.Promise = global.Promise
 
 let app = express()

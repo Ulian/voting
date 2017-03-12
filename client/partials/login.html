@@ -1,17 +1,17 @@
 <div class="text-center" ng-controller="LoginCtrl as login" ng-hide="loggedIn">
-    <h1>{{ login.title }}</h1>
-    <form ng-submit="login.submit(form)" method="post">
-        <div class="col-md-6 col-md-offset-3">
-            <div ng-show="login.error" class="alert alert-danger">{{ login.errorMessage }}</div>
-            <div class="form-group">
-                <input type="text" class="form-control" ng-model="form.name" placeholder="Username or email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" ng-model="form.password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary col-md-8 col-md-offset-2">Login</button>
-            </div>
-        </div>
-    </form>
+  <h1>{{ login.title }}</h1>
+  <form ng-submit="login.submit(form)" method="post">
+    <div class="col-md-6 col-md-offset-3">
+      <div ng-show="login.error" class="alert alert-danger">{{ login.errorMessage }}</div>
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="form.name" placeholder="Username or email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" ng-model="form.password" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary col-md-8 col-md-offset-2">Login</button>
+      </div>
+    </div>
+  </form>
 </div>
