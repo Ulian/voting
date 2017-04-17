@@ -29,6 +29,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
-app.listen(port, ip, () => {
+const server = app.listen(port, ip, () => {
   console.log(`Server running at ${ip}:${port}`)
 })
+
+module.exports = server

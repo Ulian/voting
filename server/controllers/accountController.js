@@ -75,7 +75,8 @@ accountMethods.login = (req, res) => {
 accountMethods.status = (req, res) => {
   const { token } = req.cookies
   if (token !== undefined) {
-    const user = userHelper.getUser(req.cookies.token)
+    const user = userHelper.decode(token)
+    console.log(user)
     Poll.find({ $query: {owner: user._id}, $orderby: { created: -1 } })
       .then(polls => {
         return res.status(200).json({_id: user._id, username: user.username, email: user.email, polls: polls})
