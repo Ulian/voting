@@ -24,7 +24,7 @@ pollMethods.create = (req, res) => {
     return res.status(400).json({'message': 'You need to be logged'})
   }
 
-  const user = userHelper.getUser(token)
+  const user = userHelper.decode(token)
 
   const { title, options } = req.body
   const owner = user._id
@@ -97,7 +97,7 @@ pollMethods.delete = (req, res) => {
   const { token } = req.cookies
 
   if (token !== undefined) {
-    const user = userHelper.getUser(token)
+    const user = userHelper.decode(token)
 
     Poll.findOne({_id: req.params.id})
       .then(poll => {
@@ -125,7 +125,7 @@ pollMethods.vote = (req, res) => {
   let user = null
 
   if (token !== undefined) {
-    user = userHelper.getUser(token)
+    user = userHelper.decode(token)
     user = user._id
   }
 

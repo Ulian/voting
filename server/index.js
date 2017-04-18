@@ -4,16 +4,17 @@ const mongoose = require('mongoose')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 
-const config = require('./config/config.json')
+const config = require('./config/config')
+
+mongoose.Promise = global.Promise
+
+if (!process.env.NODE_TEST) {
+  const database = require('./controllers/databaseController')
+  database.connect()
+}
 
 const port = config.SERVER.PORT
 const ip = config.SERVER.IP
-
-mongoose.connect(`mongodb://${config.DATABASE.USER}:${config.DATABASE.PASS}@${config.DATABASE.HOST}`, {
-  server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
-})
-mongoose.Promise = global.Promise
 
 let app = express()
 

@@ -12,6 +12,11 @@ const accountMethods = {}
 
 accountMethods.register = (req, res) => {
   let { username, email, password, passwordRepeat } = req.body
+
+  if (!username || !email || !password || !passwordRepeat) {
+    return res.status(400).json({'message': 'An email, username and password (with confirm) are required'})
+  }
+
   username = username.toLowerCase()
   email = email.toLowerCase()
 
@@ -48,6 +53,11 @@ accountMethods.register = (req, res) => {
 
 accountMethods.login = (req, res) => {
   let { login, password } = req.body
+
+  if (!login || !password) {
+    return res.status(400).json({'message': 'An email/username and password are required'})
+  }
+
   login = login.toLowerCase()
 
   User.findOne({$or: [{username: login}, {email: login}]})
@@ -76,7 +86,7 @@ accountMethods.status = (req, res) => {
   const { token } = req.cookies
   if (token !== undefined) {
     const user = userHelper.decode(token)
-    console.log(user)
+
     Poll.find({ $query: {owner: user._id}, $orderby: { created: -1 } })
       .then(polls => {
         return res.status(200).json({_id: user._id, username: user.username, email: user.email, polls: polls})
