@@ -13,8 +13,7 @@ if (!process.env.NODE_TEST) {
   database.connect()
 }
 
-const port = config.SERVER.PORT
-const ip = config.SERVER.IP
+const port = process.env.PORT || config.SERVER.PORT
 
 let app = express()
 
@@ -30,8 +29,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
-const server = app.listen(port, ip, () => {
-  console.log(`Server running at ${ip}:${port}`)
+const server = app.listen(port, () => {
+  console.log(`Server running at port ${port}`)
 })
 
 module.exports = server
