@@ -1,7 +1,6 @@
 # Voting
-Esta aplicación permite la realización de encuestas aceptando un voto por dirección IP/usuario como así también la adición de nuevas opciones. Fue desarrollado utilizando NodeJS (v7.7.1) y Angular 1
+Esta aplicación permite la realización de encuestas aceptando un voto por dirección IP/usuario como así también la adición de nuevas opciones por cualquier usuario.
 
 ## TODO
-- [ ] Pasar de Angular 1 a Angular 2.
+- [ ] Pasar de Angular 1 a Angular 2 (¿React?).
 - [ ] Internalización de idioma.
-- [ ] Añadir tests.
