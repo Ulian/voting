@@ -26,16 +26,15 @@ before(() => {
 })
 
 describe('Account controller', () => {
-  describe('Register', () => {
-    before((done) => {
-      User.remove({}, (err) => {
-        if (err) console.log(err)
-        done()
-      })
+  before((done) => {
+    User.remove({}, (err) => {
+      if (err) console.log(err)
+      done()
     })
-
+  })
+  describe('Register', () => {
     it('it should register an user', (done) => {
-      let user = {
+      const user = {
         username: 'username',
         email: 'email@email.com',
         password: 'password',
@@ -54,8 +53,28 @@ describe('Account controller', () => {
         })
     })
 
+    it('it should register a second user', (done) => {
+      const user = {
+        username: 'username5',
+        email: 'email5@email.com',
+        password: 'password',
+        passwordRepeat: 'password'
+      }
+
+      chai.request(server)
+        .post('/api/register')
+        .send(user)
+        .end((error, res) => {
+          should.not.exist(error)
+          should.exist(res)
+          res.should.have.status(201)
+          res.body.should.be.a('object')
+          done()
+        })
+    })
+
     it('it should not register an user with an useranme allready in use', (done) => {
-      let user = {
+      const user = {
         username: 'username',
         email: 'email2@email.com',
         password: 'password',
@@ -76,7 +95,7 @@ describe('Account controller', () => {
     })
 
     it('it should not register an user with an email allready in use', (done) => {
-      let user = {
+      const user = {
         username: 'username2',
         email: 'email@email.com',
         password: 'password',
@@ -97,7 +116,7 @@ describe('Account controller', () => {
     })
 
     it('it should not register an user without an username', (done) => {
-      let user = {
+      const user = {
         email: 'email@email.com',
         password: 'password',
         passwordRepeat: 'password'
@@ -117,7 +136,7 @@ describe('Account controller', () => {
     })
 
     it('it should not register an user without an email', (done) => {
-      let user = {
+      const user = {
         username: 'username2',
         password: 'password',
         passwordRepeat: 'password'
@@ -136,8 +155,8 @@ describe('Account controller', () => {
         })
     })
 
-    it('it should not register an user without an password', (done) => {
-      let user = {
+    it('it should not register an user without a password', (done) => {
+      const user = {
         username: 'username2',
         email: 'email@email.com',
         passwordRepeat: 'password'
@@ -156,8 +175,8 @@ describe('Account controller', () => {
         })
     })
 
-    it('it should not register an user without an passwordRepeat', (done) => {
-      let user = {
+    it('it should not register an user without a passwordRepeat', (done) => {
+      const user = {
         username: 'username2',
         email: 'email@email.com',
         password: 'password'
@@ -177,7 +196,7 @@ describe('Account controller', () => {
     })
 
     it('it should not register with a wrong passwordRepeat', (done) => {
-      let user = {
+      const user = {
         username: 'username3',
         email: 'email3@email.com',
         password: 'password',
@@ -199,7 +218,7 @@ describe('Account controller', () => {
   })
   describe('Login', () => {
     it('it should allow login', (done) => {
-      let user = {
+      const user = {
         login: 'username',
         password: 'password'
       }
@@ -218,7 +237,7 @@ describe('Account controller', () => {
     })
 
     it('it should not allow login with wrong username', (done) => {
-      let user = {
+      const user = {
         login: 'username2',
         password: 'password'
       }
@@ -237,7 +256,7 @@ describe('Account controller', () => {
     })
 
     it('it should not allow login with wrong password', (done) => {
-      let user = {
+      const user = {
         login: 'username',
         password: 'password_'
       }
@@ -256,7 +275,7 @@ describe('Account controller', () => {
     })
 
     it('it should not allow login with missing username', (done) => {
-      let user = {
+      const user = {
         password: 'password'
       }
 
@@ -274,7 +293,7 @@ describe('Account controller', () => {
     })
 
     it('it should not allow login with missing password', (done) => {
-      let user = {
+      const user = {
         login: 'username'
       }
 
@@ -294,7 +313,7 @@ describe('Account controller', () => {
 
   describe('Status', () => {
     it('it should return an user', (done) => {
-      let user = {
+      const user = {
         login: 'username',
         password: 'password'
       }

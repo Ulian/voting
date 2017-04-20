@@ -6,7 +6,7 @@ const config = require('../config/config.json')
 const User = require('../models/user')
 const Poll = require('../models/poll')
 
-const userHelper = require('../helpers/getUser')
+const userHelper = require('../helpers/userHelper')
 
 const accountMethods = {}
 

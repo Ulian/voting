@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const Poll = require('../models/poll')
 
-const userHelper = require('../helpers/getUser')
+const userHelper = require('../helpers/userHelper')
 const checkRepeatedHelper = require('../helpers/checkRepeated')
 
 const pollMethods = {}
@@ -74,6 +74,11 @@ pollMethods.getById = (req, res) => {
 
 pollMethods.addOption = (req, res) => {
   const { option: name } = req.body
+
+  if (name === undefined) {
+    return res.status(400).json({'message': 'An option is needed'})
+  }
+
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Poll not found'})
@@ -115,7 +120,7 @@ pollMethods.delete = (req, res) => {
       .catch(error => {
         if (error) return res.status(400).json({'message': error})
       })
-  }
+  } else return res.status(400).json({'message': 'You need to be logged in'})
 }
 
 pollMethods.vote = (req, res) => {
@@ -129,6 +134,8 @@ pollMethods.vote = (req, res) => {
     user = user._id
   }
 
+  let voteAdded
+
   Poll.findOne({_id: req.params.id})
     .then(poll => {
       if (!poll) return res.status(400).json({'message': 'Invalid poll'})
@@ -141,6 +148,8 @@ pollMethods.vote = (req, res) => {
             ip_address: ipAddress
           })
 
+          voteAdded = true
+
           poll.save()
             .then(() => {
               return res.status(201).json({'message': 'Vote added'})
@@ -150,6 +159,8 @@ pollMethods.vote = (req, res) => {
             })
         }
       })
+
+      if (voteAdded !== true) return res.status(400).json({'message': 'Option to vote cannot be found'})
     })
     .catch(error => {
       if (error) return res.status(400).json({'message': error})

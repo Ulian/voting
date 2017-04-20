@@ -39,7 +39,7 @@ app.controller('CreateCtrl', ['$http', '$location', '$route', function ($http, $
         }
       }, response => {
         this.response = true
-        this.responseMessage = 'A problem ocurred'
+        this.responseMessage = response.data.message
         this.alert = 'danger'
       })
   }
