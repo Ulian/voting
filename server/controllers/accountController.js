@@ -14,23 +14,23 @@ accountMethods.register = (req, res) => {
   let { username, email, password, passwordRepeat } = req.body
 
   if (!username || !email || !password || !passwordRepeat) {
-    return res.status(400).json({'message': 'An email, username and password (with confirm) are required'})
+    return res.status(400).json({ message: res.__('ALL_REGISTRATION_DATA_REQUIRED') })
   }
 
   username = username.toLowerCase()
   email = email.toLowerCase()
 
   if (password !== passwordRepeat) {
-    return res.status(400).json({'message': 'Password didnt match'})
+    return res.status(400).json({ message: res.__('PASSWORD_DID_NOT_MATCH') })
   }
 
   if (password.length < 6) {
-    return res.status(400).json({'message': 'Password need to be at least 6 characters'})
+    return res.status(400).json({ message: res.__('PASSWORD_AT_LEAST_6_CHARS') })
   }
 
   User.findOne({ $or: [{username}, {email}] })
     .then(user => {
-      if (user) return res.status(400).json({'message': 'Username or email in use'})
+      if (user) return res.status(400).json({ message: res.__('DATA_IN_USE') })
 
       const account = new User({
         username,
@@ -40,14 +40,14 @@ accountMethods.register = (req, res) => {
 
       account.save()
         .then(() => {
-          return res.status(201).json({'message': 'User created'})
+          return res.status(201).json({ message: res.__('ACCOUNT_CREATED') })
         })
         .catch(error => {
-          return res.status(400).json({'message': error})
+          if (error) return res.status(400).json({ message: error })
         })
     })
     .catch(error => {
-      return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 
@@ -55,17 +55,17 @@ accountMethods.login = (req, res) => {
   let { login, password } = req.body
 
   if (!login || !password) {
-    return res.status(400).json({'message': 'An email/username and password are required'})
+    return res.status(400).json({ message: res.__('ALL_LOGIN_DATA_REQUIRED') })
   }
 
   login = login.toLowerCase()
 
   User.findOne({$or: [{username: login}, {email: login}]})
     .then(user => {
-      if (!user) return res.status(400).json({'message': 'Username or email not found'})
+      if (!user) return res.status(400).json({ message: res.__('ACCOUNT_NOT_FOUND') })
 
       const validPassword = CryptoJS.AES.decrypt(user.password, config.DATABASE.SECRET).toString(CryptoJS.enc.Utf8)
-      if (validPassword !== password) return res.status(400).json({'message': 'Incorrect password'})
+      if (validPassword !== password) return res.status(400).json({ message: res.__('INCORRECT_PASSWORD') })
 
       var token = jwt.sign(user, config.DATABASE.SECRET, {
         expiresIn: '365d'
@@ -75,10 +75,10 @@ accountMethods.login = (req, res) => {
 
       res.cookie('token', token, { expires: moment().add('1', 'y').toDate(), secure: protocol, httpOnly: true })
 
-      return res.status(200).json({'message': 'User logged in'})
+      return res.status(200).json({ message: res.__('USER_LOGGED_IN') })
     })
     .catch(error => {
-      return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 
@@ -92,9 +92,9 @@ accountMethods.status = (req, res) => {
         return res.status(200).json({_id: user._id, username: user.username, email: user.email, polls: polls})
       })
       .catch(error => {
-        return res.status(400).json({'message': error})
+        if (error) return res.status(400).json({ message: error })
       })
-  } else return res.status(400).json({'message': 'You need to be logged'})
+  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
 }
 
 module.exports = accountMethods

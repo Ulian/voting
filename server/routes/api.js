@@ -2,6 +2,20 @@ const express = require('express')
 
 let routes = express.Router()
 
+routes.all('*', (req, res, next) => {
+  let { language } = req.cookies
+  const languages = res.getLocales()
+
+  if (languages.indexOf(language) === -1) language = languages[0]
+  res.setLocale(language || 'es')
+
+  next()
+})
+
+const locale = require('../controllers/localeController')
+
+routes.get('/locale/:lang', locale.set)
+
 const account = require('../controllers/accountController')
 
 routes.post('/register', account.register)

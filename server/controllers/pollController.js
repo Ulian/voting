@@ -21,7 +21,7 @@ pollMethods.getPolls = (req, res) => {
 pollMethods.create = (req, res) => {
   const { token } = req.cookies
   if (token === undefined) {
-    return res.status(400).json({'message': 'You need to be logged'})
+    return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
   }
 
   const user = userHelper.decode(token)
@@ -34,14 +34,14 @@ pollMethods.create = (req, res) => {
     return optionsArray.push({ name })
   })
 
-  if (title.length < 5) return res.status(400).json({'message': 'Title need to be at least 5 characters'})
-  if (optionsArray.length < 2) return res.status(400).json({'message': 'The poll need to have at least 2 options'})
-  if (mongoose.Types.ObjectId.isValid(owner) === false) return res.status(400).json({'message': 'Invalid owner'})
+  if (title.length < 5) return res.status(400).json({ message: res.__('TITLE_AT_LEAST_5_CHARS') })
+  if (optionsArray.length < 2) return res.status(400).json({ message: res.__('POLL_AT_LEAST_2_OPTIONS') })
+  if (mongoose.Types.ObjectId.isValid(owner) === false) return res.status(400).json({ message: res.__('NOT_VALID_OWNER') })
 
   let repeat = []
   optionsArray.forEach(current => {
     if (repeat.indexOf(current.name) === -1) repeat.push(current.name)
-    else return res.status(400).json({'message': 'Option cannot be repeated'})
+    else return res.status(400).json({ message: res.__('OPTION_CANNOT_BE_REPEATED') })
   })
 
   if (repeat.length !== optionsArray.length) return
@@ -54,21 +54,21 @@ pollMethods.create = (req, res) => {
 
   poll.save()
     .then(() => {
-      return res.status(201).json({'message': 'Poll created'})
+      return res.status(201).json({ message: res.__('POLL_CREATED') })
     })
     .catch(error => {
-      if (error) return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 
 pollMethods.getById = (req, res) => {
   Poll.findOne({_id: req.params.id})
     .then(poll => {
-      if (!poll) return res.status(400).json({'message': 'Poll not found'})
+      if (!poll) return res.status(400).json({ message: res.__('POLL_NOT_FOUND') })
       return res.status(200).json(poll)
     })
     .catch(error => {
-      if (error) return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 
@@ -76,25 +76,25 @@ pollMethods.addOption = (req, res) => {
   const { option: name } = req.body
 
   if (name === undefined) {
-    return res.status(400).json({'message': 'An option is needed'})
+    return res.status(400).json({ message: res.__('OPTION_TEXT_NEEDED') })
   }
 
   Poll.findOne({_id: req.params.id})
     .then(poll => {
-      if (!poll) return res.status(400).json({'message': 'Poll not found'})
-      if (checkRepeatedHelper.isOptionRepeated(poll.options, name)) return res.status(400).json({'message': 'Option cannot be repeated'})
+      if (!poll) return res.status(400).json({ message: res.__('POLL_NOT_FOUND') })
+      if (checkRepeatedHelper.isOptionRepeated(poll.options, name)) return res.status(400).json({ message: res.__('OPTION_CANNOT_BE_REPEATED') })
 
       poll.options.push({
         name
       })
 
       poll.save(function (error) {
-        if (error) return res.status(400).json({'message': 'An error ocurred'})
-        return res.status(201).json({'message': 'Option added'})
+        if (error) return res.status(400).json({ message: error })
+        return res.status(201).json({ message: res.__('OPTION_ADDED') })
       })
     })
     .catch(error => {
-      if (error) return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 
@@ -106,21 +106,21 @@ pollMethods.delete = (req, res) => {
 
     Poll.findOne({_id: req.params.id})
       .then(poll => {
-        if (!poll) return res.status(400).json({'message': 'Invalid poll'})
-        if (poll.owner !== user._id) return res.status(401).json({'message': 'It is not your poll'})
+        if (!poll) return res.status(400).json({ message: res.__('POLL_NOT_FOUND') })
+        if (poll.owner !== user._id) return res.status(401).json({ message: res.__('NOT_YOUR_POLL') })
 
         Poll.findByIdAndRemove(poll._id)
           .then(() => {
-            return res.status(200).json({'message': 'Poll removed'})
+            return res.status(200).json({ message: res.__('POLL_REMOVED') })
           })
           .catch(error => {
-            if (error) return res.status(400).json({'message': error})
+            if (error) return res.status(400).json({ message: error })
           })
       })
       .catch(error => {
-        if (error) return res.status(400).json({'message': error})
+        if (error) return res.status(400).json({ message: error })
       })
-  } else return res.status(400).json({'message': 'You need to be logged in'})
+  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
 }
 
 pollMethods.vote = (req, res) => {
@@ -138,8 +138,8 @@ pollMethods.vote = (req, res) => {
 
   Poll.findOne({_id: req.params.id})
     .then(poll => {
-      if (!poll) return res.status(400).json({'message': 'Invalid poll'})
-      if (checkRepeatedHelper.isVoteRepeated(poll.options, user, ipAddress)) return res.status(400).json({'message': 'You already vote in this poll'})
+      if (!poll) return res.status(400).json({ message: res.__('POLL_NOT_FOUND') })
+      if (checkRepeatedHelper.isVoteRepeated(poll.options, user, ipAddress)) return res.status(400).json({ message: res.__('ALREADY_VOTE') })
 
       poll.options.forEach((option, index) => {
         if (option.name === optionVoted) {
@@ -152,18 +152,18 @@ pollMethods.vote = (req, res) => {
 
           poll.save()
             .then(() => {
-              return res.status(201).json({'message': 'Vote added'})
+              return res.status(201).json({ message: res.__('VOTE_ADDED') })
             })
             .catch(error => {
-              if (error) return res.status(400).json({'message': error})
+              if (error) return res.status(400).json({ message: error })
             })
         }
       })
 
-      if (voteAdded !== true) return res.status(400).json({'message': 'Option to vote cannot be found'})
+      if (voteAdded !== true) return res.status(400).json({ message: res.__('OPTION_NOT_FOUND') })
     })
     .catch(error => {
-      if (error) return res.status(400).json({'message': error})
+      if (error) return res.status(400).json({ message: error })
     })
 }
 

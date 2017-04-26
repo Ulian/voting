@@ -1,7 +1,6 @@
 {
   "SERVER": {
-    "PORT": 80,
-    "IP": "127.0.0.1"
+    "PORT": 80
   },
   "DATABASE": {
     "USER": "",
