@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'create', component: CreateComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: '**', component: PollListComponent }
 ];
 

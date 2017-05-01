@@ -7,6 +7,7 @@ git clone https://github.com/Ulian/voting.git
 cd voting
 npm install
 cd client
+npm install
 npm build
 cd ..
 npm start

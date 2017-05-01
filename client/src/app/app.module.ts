@@ -5,6 +5,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { MomentModule } from 'angular2-moment';
 import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { PollListComponent } from './poll-list/poll-list.component';
@@ -24,7 +25,8 @@ import { PollService, AccountService } from './_services/index';
     HttpModule,
     JsonpModule,
     MomentModule,
-    ChartsModule
+    ChartsModule,
+    RouterModule
   ],
   declarations: [
     AppComponent,
