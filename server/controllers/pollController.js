@@ -19,7 +19,8 @@ pollMethods.getPolls = (req, res) => {
 }
 
 pollMethods.create = (req, res) => {
-  const { token } = req.cookies
+  const { token } = req.body
+
   if (token === undefined) {
     return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
   }
@@ -31,9 +32,13 @@ pollMethods.create = (req, res) => {
   const optionsArray = []
 
   options.split(',').map(name => {
-    return optionsArray.push({ name })
+    if (name !== '') {
+      return optionsArray.push({ name })
+    }
   })
 
+  if (title === undefined) return res.status(400).json({ message: res.__('TITLE_AT_LEAST_5_CHARS') })
+  if (options === undefined || options.length === 1) return res.status(400).json({ message: res.__('POLL_AT_LEAST_2_OPTIONS') })
   if (title.length < 5) return res.status(400).json({ message: res.__('TITLE_AT_LEAST_5_CHARS') })
   if (optionsArray.length < 2) return res.status(400).json({ message: res.__('POLL_AT_LEAST_2_OPTIONS') })
   if (mongoose.Types.ObjectId.isValid(owner) === false) return res.status(400).json({ message: res.__('NOT_VALID_OWNER') })
@@ -75,7 +80,7 @@ pollMethods.getById = (req, res) => {
 pollMethods.addOption = (req, res) => {
   const { option: name } = req.body
 
-  if (name === undefined) {
+  if (name === undefined || name === '') {
     return res.status(400).json({ message: res.__('OPTION_TEXT_NEEDED') })
   }
 
@@ -99,7 +104,7 @@ pollMethods.addOption = (req, res) => {
 }
 
 pollMethods.delete = (req, res) => {
-  const { token } = req.cookies
+  const { token } = req.body
 
   if (token !== undefined) {
     const user = userHelper.decode(token)
@@ -120,11 +125,11 @@ pollMethods.delete = (req, res) => {
       .catch(error => {
         if (error) return res.status(400).json({ message: error })
       })
-  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
+  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED_DELETE') })
 }
 
 pollMethods.vote = (req, res) => {
-  const { token } = req.cookies
+  const { token } = req.body
   const { option: optionVoted } = req.params
   const ipAddress = requestIp.getClientIp(req)
   let user = null

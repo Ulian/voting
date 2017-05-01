@@ -1,0 +1,7 @@
+<h1>{{ account.username }}'s {{ title }}</h1>
+<div class="list-group">
+  <div *ngIf="account.polls?.length === 0" class="alert alert-info">You did not create any poll yet.</div>
+  <a *ngFor="let poll of account.polls" routerLink="/poll/{{ poll._id }}" class="list-group-item">
+    {{ poll.title }} <span class="label label-primary pull-right">{{ poll.created | amTimeAgo }} </span>
+  </a>
+</div>

@@ -3,7 +3,9 @@ const moment = require('moment')
 let locale = {}
 
 locale.set = (req, res) => {
-  const { lang } = req.params
+  let { lang } = req.params
+  lang = lang.toLowerCase()
+
   res.setLocale(lang)
 
   res.cookie('language', lang, { expires: moment().add('1', 'y').toDate() })

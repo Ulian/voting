@@ -4,6 +4,8 @@ let routes = express.Router()
 
 routes.all('*', (req, res, next) => {
   let { language } = req.cookies
+  if (language !== undefined) language = language.toLowerCase()
+
   const languages = res.getLocales()
 
   if (languages.indexOf(language) === -1) language = languages[0]
@@ -20,7 +22,7 @@ const account = require('../controllers/accountController')
 
 routes.post('/register', account.register)
 routes.post('/login', account.login)
-routes.get('/status', account.status)
+routes.post('/profile', account.profile)
 
 const poll = require('../controllers/pollController')
 

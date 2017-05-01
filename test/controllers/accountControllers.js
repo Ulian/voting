@@ -32,13 +32,14 @@ describe('Account controller', () => {
       done()
     })
   })
+
   describe('Register', () => {
     it('it should register an user', (done) => {
       const user = {
         username: 'username',
         email: 'email@email.com',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -58,7 +59,7 @@ describe('Account controller', () => {
         username: 'username5',
         email: 'email5@email.com',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -78,7 +79,7 @@ describe('Account controller', () => {
         username: 'username',
         email: 'email2@email.com',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -99,7 +100,7 @@ describe('Account controller', () => {
         username: 'username2',
         email: 'email@email.com',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -119,7 +120,7 @@ describe('Account controller', () => {
       const user = {
         email: 'email@email.com',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -139,7 +140,7 @@ describe('Account controller', () => {
       const user = {
         username: 'username2',
         password: 'password',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -159,7 +160,7 @@ describe('Account controller', () => {
       const user = {
         username: 'username2',
         email: 'email@email.com',
-        passwordRepeat: 'password'
+        passwordConfirm: 'password'
       }
 
       chai.request(server)
@@ -175,7 +176,7 @@ describe('Account controller', () => {
         })
     })
 
-    it('it should not register an user without a passwordRepeat', (done) => {
+    it('it should not register an user without a passwordConfirm', (done) => {
       const user = {
         username: 'username2',
         email: 'email@email.com',
@@ -195,12 +196,12 @@ describe('Account controller', () => {
         })
     })
 
-    it('it should not register with a wrong passwordRepeat', (done) => {
+    it('it should not register with a wrong passwordConfirm', (done) => {
       const user = {
         username: 'username3',
         email: 'email3@email.com',
         password: 'password',
-        passwordRepeat: 'password_1'
+        passwordConfirm: 'password_1'
       }
 
       chai.request(server)
@@ -216,6 +217,7 @@ describe('Account controller', () => {
         })
     })
   })
+
   describe('Login', () => {
     it('it should allow login', (done) => {
       const user = {
@@ -311,8 +313,8 @@ describe('Account controller', () => {
     })
   })
 
-  describe('Status', () => {
-    it('it should return an user', (done) => {
+  describe('Profile', () => {
+    it('it should return an user with its polls from token', (done) => {
       const user = {
         login: 'username',
         password: 'password'
@@ -324,7 +326,8 @@ describe('Account controller', () => {
         .send(user)
         .end((error, res) => {
           should.not.exist(error)
-          return agent.get('/api/status')
+          return agent.post('/api/profile')
+            .send({ token: res.body.token })
             .end((error, res) => {
               should.not.exist(error)
               should.exist(res)
@@ -339,9 +342,10 @@ describe('Account controller', () => {
         })
     })
 
-    it('it should not return an user if not logged', (done) => {
+    it('it should not return an user without token', (done) => {
       chai.request(server)
-        .get('/api/status')
+        .post('/api/profile')
+        .send({})
         .end((error, res) => {
           should.exist(error)
           should.exist(res)

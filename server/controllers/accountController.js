@@ -1,6 +1,5 @@
 const CryptoJS = require('crypto-js')
 const jwt = require('jsonwebtoken')
-const moment = require('moment')
 
 const config = require('../config/config.json')
 const User = require('../models/user')
@@ -11,22 +10,24 @@ const userHelper = require('../helpers/userHelper')
 const accountMethods = {}
 
 accountMethods.register = (req, res) => {
-  let { username, email, password, passwordRepeat } = req.body
+  let { username, email, password, passwordConfirm } = req.body
 
-  if (!username || !email || !password || !passwordRepeat) {
+  if (!username || !email || !password || !passwordConfirm) {
     return res.status(400).json({ message: res.__('ALL_REGISTRATION_DATA_REQUIRED') })
   }
 
   username = username.toLowerCase()
   email = email.toLowerCase()
 
-  if (password !== passwordRepeat) {
+  if (password !== passwordConfirm) {
     return res.status(400).json({ message: res.__('PASSWORD_DID_NOT_MATCH') })
   }
 
   if (password.length < 6) {
     return res.status(400).json({ message: res.__('PASSWORD_AT_LEAST_6_CHARS') })
   }
+
+  password = CryptoJS.AES.encrypt(password, config.DATABASE.SECRET)
 
   User.findOne({ $or: [{username}, {email}] })
     .then(user => {
@@ -35,7 +36,7 @@ accountMethods.register = (req, res) => {
       const account = new User({
         username,
         email,
-        password: CryptoJS.AES.encrypt(password, config.DATABASE.SECRET)
+        password
       })
 
       account.save()
@@ -71,19 +72,18 @@ accountMethods.login = (req, res) => {
         expiresIn: '365d'
       })
 
-      var protocol = (req.headers['x-forwarded-proto'] === 'https')
-
-      res.cookie('token', token, { expires: moment().add('1', 'y').toDate(), secure: protocol, httpOnly: true })
-
-      return res.status(200).json({ message: res.__('USER_LOGGED_IN') })
+      return res.status(200).json({
+        message: res.__('USER_LOGGED_IN'),
+        token: token
+      })
     })
     .catch(error => {
       if (error) return res.status(400).json({ message: error })
     })
 }
 
-accountMethods.status = (req, res) => {
-  const { token } = req.cookies
+accountMethods.profile = (req, res) => {
+  const { token } = req.body
   if (token !== undefined) {
     const user = userHelper.decode(token)
 
@@ -94,7 +94,7 @@ accountMethods.status = (req, res) => {
       .catch(error => {
         if (error) return res.status(400).json({ message: error })
       })
-  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
+  } else return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED_STATUS') })
 }
 
 module.exports = accountMethods

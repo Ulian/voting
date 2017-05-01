@@ -52,6 +52,7 @@ describe('Poll controller', () => {
         .post('/api/login')
         .send(user)
         .end((error, res) => {
+          poll.token = res.body.token
           should.not.exist(error)
           return agent.post('/api/poll')
             .send(poll)
@@ -119,6 +120,36 @@ describe('Poll controller', () => {
       const poll = {
         title: 'Poll!',
         options: 'one'
+      }
+
+      const user = {
+        login: 'username',
+        password: 'password'
+      }
+
+      const agent = chai.request.agent(server)
+      agent
+        .post('/api/login')
+        .send(user)
+        .end((error, res) => {
+          should.not.exist(error)
+          return agent.post('/api/poll')
+            .send(poll)
+            .end((error, res) => {
+              should.exist(error)
+              should.exist(res)
+              res.should.have.status(400)
+              res.body.should.be.a('object')
+              res.body.should.have.property('message')
+              done()
+            })
+        })
+    })
+
+    it('it should not add a poll with an empty option', (done) => {
+      const poll = {
+        title: 'Poll!',
+        options: 'one,'
       }
 
       const user = {
@@ -377,6 +408,7 @@ describe('Poll controller', () => {
         .end((error, res) => {
           should.not.exist(error)
           return agent.delete(`/api/poll/${validId}`)
+            .send({ token: res.body.token })
             .end((error, res) => {
               should.exist(error)
               should.exist(res)
@@ -401,6 +433,7 @@ describe('Poll controller', () => {
         .end((error, res) => {
           should.not.exist(error)
           return agent.delete(`/api/poll/0`)
+            .send({ token: res.body.token })
             .end((error, res) => {
               should.exist(error)
               should.exist(res)
@@ -425,6 +458,7 @@ describe('Poll controller', () => {
         .end((error, res) => {
           should.not.exist(error)
           return agent.delete(`/api/poll/${validId}`)
+            .send({ token: res.body.token })
             .end((error, res) => {
               should.not.exist(error)
               should.exist(res)
