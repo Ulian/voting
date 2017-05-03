@@ -6,7 +6,8 @@ import { NgModule,
          RouterModule,
          MomentModule,
          ChartsModule,
-         RoutingModule } from './_modules/index';
+         RoutingModule,
+         TranslateModule } from './_modules/index';
 
 import { AppComponent,
          PollListComponent,
@@ -20,6 +21,9 @@ import { PollService,
          AccountService,
          LocaleService } from './_services/index';
 
+import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { Http } from '@angular/http';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -29,7 +33,12 @@ import { PollService,
     JsonpModule,
     MomentModule,
     ChartsModule,
-    RouterModule
+    RouterModule,
+    TranslateModule.forRoot({
+        provide: TranslateLoader,
+        useFactory: (http: Http) => new TranslateStaticLoader(http, '../assets/locales', '.json'),
+        deps: [Http]
+    })
   ],
   declarations: [
     AppComponent,

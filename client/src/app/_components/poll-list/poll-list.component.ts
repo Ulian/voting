@@ -8,12 +8,9 @@ import { PollService } from '../../_services/index';
 })
 
 export class PollListComponent implements OnInit {
-  name: string;
   polls: object[] = [];
-  mode = 'Observable';
-  constructor(private pollService: PollService) {
-    this.name = 'Poll List';
-  }
+
+  constructor(private pollService: PollService) { }
 
   ngOnInit() {
     this.pollService.getPolls()
@@ -21,5 +18,4 @@ export class PollListComponent implements OnInit {
         this.polls = polls.reverse()
       );
   }
-
 }

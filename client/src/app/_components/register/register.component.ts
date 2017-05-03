@@ -11,7 +11,6 @@ import { NewAccount, Message } from '../../_models/index';
 })
 
 export class RegisterComponent {
-  title = 'Register an account';
   account: any = {};
   message: Message;
   loading = false;

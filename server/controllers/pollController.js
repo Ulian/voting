@@ -106,7 +106,7 @@ pollMethods.addOption = (req, res) => {
 pollMethods.delete = (req, res) => {
   const { token } = req.body
 
-  if (token !== undefined) {
+  if (token !== undefined || token !== null) {
     const user = userHelper.decode(token)
 
     Poll.findOne({_id: req.params.id})
@@ -134,7 +134,7 @@ pollMethods.vote = (req, res) => {
   const ipAddress = requestIp.getClientIp(req)
   let user = null
 
-  if (token !== undefined) {
+  if (token !== undefined || token !== null) {
     user = userHelper.decode(token)
     user = user._id
   }

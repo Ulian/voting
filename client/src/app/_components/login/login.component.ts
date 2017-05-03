@@ -12,7 +12,6 @@ import { LoginAccount, Message } from '../../_models/index';
 })
 
 export class LoginComponent {
-  title = 'Login into an account';
   account: any = {};
   message: Message;
   loading = false;

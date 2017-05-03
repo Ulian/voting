@@ -14,6 +14,5 @@ npm start
 ```
 
 ## TODO
-- [ ] Internalización de idioma (client-side).
 - [ ] Realizar los test correspondientes (client-side).
 - [ ] Modificar el código para seguir la guía de estilo recomendada por Angular.io (client-side).

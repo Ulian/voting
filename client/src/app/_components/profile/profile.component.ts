@@ -7,7 +7,6 @@ import { AccountService } from '../../_services/index';
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  title = 'profile';
   account: object = {};
 
   constructor(

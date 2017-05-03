@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LocaleService } from '../../_services/index';
+import { LocaleService, TranslateService } from '../../_services/index';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,13 @@ export class AppComponent implements OnInit {
   locale = 'es';
 
   constructor(
-    private localeService: LocaleService
+    private localeService: LocaleService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
+    this.translateService.setDefaultLang(this.locale);
+    moment.locale(this.locale);
     this.isLogged();
   }
 
@@ -30,6 +35,8 @@ export class AppComponent implements OnInit {
     this.localeService.changeLocale(locale)
       .then(response => {
         this.locale = locale;
+        this.translateService.setDefaultLang(locale);
+        moment.locale(locale);
       });
   }
 }

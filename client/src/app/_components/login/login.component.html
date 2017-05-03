@@ -1,16 +1,16 @@
 <div class="text-center">
-  <h1>{{ title }}</h1>
+  <h1 translate>LOGIN_TITLE</h1>
   <form (ngSubmit)="login(account)">
     <div class="col-md-4 col-md-offset-4">
       <div *ngIf="message" class="alert alert-{{ message.type }}">{{ message.text }}</div>
       <div class="form-group">
-        <input type="text" class="form-control" name="login" [(ngModel)]="account.login" placeholder="Username or email" required />
+        <input type="text" class="form-control" name="login" [(ngModel)]="account.login" [placeholder]="'LOGIN_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" name="password" [(ngModel)]="account.password" placeholder="Password" required />
+        <input type="password" class="form-control" name="password" [(ngModel)]="account.password" [placeholder]="'PASSWORD_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <button type="submit" [disabled]="loading" class="btn btn-primary col-md-8 col-md-offset-2">Login</button>
+        <button type="submit" [disabled]="loading" class="btn btn-primary col-md-8 col-md-offset-2" translate>LOGIN</button>
       </div>
     </div>
   </form>

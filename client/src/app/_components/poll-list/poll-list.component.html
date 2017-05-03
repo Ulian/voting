@@ -1,7 +1,7 @@
-<h1>{{ name }}</h1>
+<h1 translate>POLL_LIST_NAME</h1>
 <div class="list-group">
-  <div *ngIf="polls?.length === 0" class="alert alert-info">There is not any poll yet.</div>
+  <div *ngIf="polls?.length === 0" class="alert alert-info" translate>NO_POLLS_YET</div>
   <a *ngFor="let poll of polls;" class="list-group-item" routerLink="/poll/{{ poll._id }}">
-    {{ poll.title }} <span class="label label-primary pull-right">{{ poll.created | amTimeAgo }} </span>
+    {{ poll.title }} <span class="label label-primary pull-right">{{ poll.created | amTimeAgo }}</span>
   </a>
 </div>

@@ -8,3 +8,4 @@ export { RouterModule } from '@angular/router';
 
 export { MomentModule } from 'angular2-moment';
 export { ChartsModule } from 'ng2-charts';
+export { TranslateModule } from 'ng2-translate';

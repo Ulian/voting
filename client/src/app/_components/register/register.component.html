@@ -1,22 +1,22 @@
 <div class="text-center">
-  <h1>{{ title }}</h1>
+  <h1 translate>REGISTER_TITLE</h1>
   <form (ngSubmit)="register(account)">
     <div class="col-md-4 col-md-offset-4">
       <div *ngIf="message" class="alert alert-{{ message.type }}">{{ message.text }}</div>
       <div class="form-group">
-        <input type="text" class="form-control" name="username" [(ngModel)]="account.username" placeholder="Username" required />
+        <input type="text" class="form-control" name="username" [(ngModel)]="account.username" [placeholder]="'USERNAME_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" name="email" [(ngModel)]="account.email" placeholder="Email" required />
+        <input type="text" class="form-control" name="email" [(ngModel)]="account.email" [placeholder]="'EMAIL_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" name="password" [(ngModel)]="account.password" placeholder="Password" required />
+        <input type="password" class="form-control" name="password" [(ngModel)]="account.password" [placeholder]="'PASSWORD_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" name="passwordConfirm" [(ngModel)]="account.passwordConfirm" placeholder="Repeat password" required />
+        <input type="password" class="form-control" name="passwordConfirm" [(ngModel)]="account.passwordConfirm" [placeholder]="'REPEAT_PASSWORD_PLACEHOLDER' | translate" required />
       </div>
       <div class="form-group">
-        <button type="submit" [disabled]="loading" class="btn btn-primary col-md-8 col-md-offset-2">Register</button>
+        <button type="submit" [disabled]="loading" class="btn btn-primary col-md-8 col-md-offset-2" translate>REGISTER</button>
       </div>
     </div>
   </form>

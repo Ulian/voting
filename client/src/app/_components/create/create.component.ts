@@ -13,7 +13,6 @@ import { Message } from '../../_models/index';
 })
 
 export class CreateComponent {
-  title = 'Create a poll';
   question: string;
   options: string[] = ['', ''];
   message: Message;

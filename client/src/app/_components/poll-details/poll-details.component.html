@@ -4,17 +4,17 @@
     <div class="row">
       <div class="col-md-4">
         <a class="btn btn-block btn-danger" *ngIf="userid === poll.owner" (click)="removePoll()">Delete Poll</a><br/>
-        <a href="https://twitter.com/intent/tweet?text={{ share }}" class="btn btn-block" style="background: #4099FF; color: #fff;">Share on Twitter</a><br/>
+        <a href="https://twitter.com/intent/tweet?text={{ share }}" class="btn btn-block" style="background: #4099FF; color: #fff;" translate>SHARE_ON_TWITTER</a><br/>
         <div *ngIf="message" class="alert alert-{{ message.type }}">{{ message.text }}</div>
         <ul class="list-group">
-          <a *ngFor="let option of poll.options;" class="list-group-item pointer" (click)="voteOption(option.name)"> <!--ng-click="poll.vote(item.name)"-->
+          <a *ngFor="let option of poll.options;" class="list-group-item pointer" (click)="voteOption(option.name)">
             {{ option.name }} <span class="badge"> {{ option.votes.length }}</span>
           </a>
         </ul>
         <div class="input-group">
-          <input type="text" class="form-control" [(ngModel)]="newOption" placeholder="New option">
+          <input type="text" class="form-control" [(ngModel)]="newOption" [placeholder]="'NEW_OPTION' | translate">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button" (click)="addOption()">Add</button>
+            <button class="btn btn-default" type="button" (click)="addOption()" translate>ADD_BUTTON</button>
           </span>
         </div>
       </div>
