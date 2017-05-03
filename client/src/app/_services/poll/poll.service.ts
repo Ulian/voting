@@ -94,7 +94,7 @@ export class PollService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('Error ', JSON.parse(error._body).message);
+    // console.error('Error ', JSON.parse(error._body).message);
     return Promise.reject(JSON.parse(error._body) || error);
   }
 }

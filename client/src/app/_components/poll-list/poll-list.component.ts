@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PollService } from '../_services/index';
+import { PollService } from '../../_services/index';
 
 @Component({
   selector: 'app-poll-list',
@@ -9,7 +9,6 @@ import { PollService } from '../_services/index';
 
 export class PollListComponent implements OnInit {
   name: string;
-  errorMessage: string;
   polls: object[] = [];
   mode = 'Observable';
   constructor(private pollService: PollService) {

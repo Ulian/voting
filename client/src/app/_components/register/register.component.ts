@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AccountService } from '../_services/index';
+import { AccountService } from '../../_services/index';
+
+import { NewAccount, Message } from '../../_models/index';
 
 @Component({
   selector: 'app-register',
@@ -11,27 +13,29 @@ import { AccountService } from '../_services/index';
 export class RegisterComponent {
   title = 'Register an account';
   account: any = {};
-  message: string;
-  messageType: string;
+  message: Message;
   loading = false;
 
   constructor(
     private accountService: AccountService,
     private router: Router
-  ) {}
+  ) { }
 
-  register(username, email, password, passwordConfirm) {
+  register(newAccount: NewAccount) {
     this.loading = true;
-    this.accountService.register(username, email, password, passwordConfirm)
+    this.accountService.register(newAccount)
       .then(response => {
-        this.message = response['message'];
-        this.messageType = 'success';
-        this.account = {};
+        this.message = {
+          text: response['message'],
+          type: 'success'
+        };
         this.router.navigate(['/login']);
       })
       .catch(error => {
-        this.message = error['message'];
-        this.messageType = 'danger';
+        this.message = {
+          text: error['message'],
+          type: 'danger'
+        };
         this.loading = false;
       });
   }

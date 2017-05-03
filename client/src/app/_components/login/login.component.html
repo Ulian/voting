@@ -1,8 +1,8 @@
 <div class="text-center">
   <h1>{{ title }}</h1>
-  <form (ngSubmit)="login(account.login, account.password)">
+  <form (ngSubmit)="login(account)">
     <div class="col-md-4 col-md-offset-4">
-      <div *ngIf="message" class="alert alert-{{ messageType }}">{{ message }}</div>
+      <div *ngIf="message" class="alert alert-{{ message.type }}">{{ message.text }}</div>
       <div class="form-group">
         <input type="text" class="form-control" name="login" [(ngModel)]="account.login" placeholder="Username or email" required />
       </div>

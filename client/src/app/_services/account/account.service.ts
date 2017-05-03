@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers} from '@angular/http';
 
+import { NewAccount, LoginAccount } from '../../_models/index';
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -10,31 +12,19 @@ export class AccountService {
 
   constructor(private http: Http) { }
 
-  register(username, email, password, passwordConfirm): Promise<Object> {
-    const account = {
-      username,
-      email,
-      password,
-      passwordConfirm
-    };
-
+  register(newAccount: NewAccount): Promise<Object> {
     return this.http
-        .post(`${this.apiUrl}/register`, account, { headers: this.headers, withCredentials: true })
-        .toPromise()
-        .then((response: Response) => {
-          return response.json();
-        })
-        .catch(this.handleError);
+      .post(`${this.apiUrl}/register`, newAccount, { headers: this.headers, withCredentials: true })
+      .toPromise()
+      .then((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
   }
 
-  login(login, password): Promise<Object> {
-    const account = {
-      login,
-      password
-    };
-
+  login(loginAccount: LoginAccount): Promise<Object> {
     return this.http
-      .post(`${this.apiUrl}/login`, account, { headers: this.headers, withCredentials: true })
+      .post(`${this.apiUrl}/login`, loginAccount, { headers: this.headers, withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         const r = response.json();

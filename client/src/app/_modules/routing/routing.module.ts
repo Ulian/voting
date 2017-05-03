@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import { PollListComponent } from '../poll-list/poll-list.component';
-import { PollDetailsComponent } from '../poll-details/poll-details.component';
-import { RegisterComponent } from '../register/register.component';
-import { LoginComponent } from '../login/login.component';
-import { CreateComponent } from '../create/create.component';
-import { ProfileComponent } from '../profile/profile.component';
+import { Routes } from '@angular/router';
+
+import { PollListComponent,
+         PollDetailsComponent,
+         RegisterComponent,
+         LoginComponent,
+         CreateComponent,
+         ProfileComponent } from '../../_components/index';
 
 const appRoutes: Routes = [
   { path: 'list', component: PollListComponent },
@@ -24,4 +26,4 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ]
 })
-export class AppRoutingModule { }
+export class RoutingModule { }

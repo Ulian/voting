@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+
+import { LocaleService } from '../../_services/index';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +12,9 @@ export class AppComponent implements OnInit {
 
   logged = false;
   locale = 'es';
-  localeText = 'EN';
 
   constructor(
-    private http: Http
+    private localeService: LocaleService
   ) {}
 
   ngOnInit() {
@@ -27,12 +26,10 @@ export class AppComponent implements OnInit {
     return this.logged;
   }
 
-  changeLocale() {
-    this.http.get(`${this.apiUrl}/locale/${this.locale}`, { withCredentials: true })
-      .toPromise()
+  changeLocale(locale) {
+    this.localeService.changeLocale(locale)
       .then(response => {
-        this.locale = (this.locale === 'es') ? 'en' : 'es';
-        this.localeText = (this.locale === 'es') ? 'ES' : 'EN';
+        this.locale = locale;
       });
   }
 }

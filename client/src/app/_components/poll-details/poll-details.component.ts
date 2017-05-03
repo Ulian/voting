@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PollService } from '../_services/index';
 import { Router } from '@angular/router';
 
 import { JwtHelper } from 'angular2-jwt';
+
+import { PollService } from '../../_services/index';
+
+import { Message } from '../../_models/index';
 
 
 @Component({
@@ -15,8 +18,7 @@ export class PollDetailsComponent implements OnInit {
   share: string;
   pollId: string;
   userid: string;
-  message: string;
-  messageType: string;
+  message: Message;
   newOption: string;
 
   pieChartLabels: string[];
@@ -55,27 +57,35 @@ export class PollDetailsComponent implements OnInit {
   voteOption(name) {
     this.pollService.voteOption(this.pollId, name)
     .then(response => {
-      this.message = response['message'];
-      this.messageType = 'success';
+      this.message = {
+        text: response['message'],
+        type: 'success'
+      };
       this.loadPoll();
     })
     .catch(error => {
-      this.message = error['message'];
-      this.messageType = 'danger';
+      this.message = {
+        text: error['message'],
+        type: 'danger'
+      };
     });
   }
 
   addOption() {
     this.pollService.addOption(this.pollId, this.newOption)
     .then(response => {
-      this.message = response['message'];
-      this.messageType = 'success';
+      this.message = {
+        text: response['message'],
+        type: 'success'
+      };
       this.newOption = '';
       this.loadPoll();
     })
     .catch(error => {
-      this.message = error['message'];
-      this.messageType = 'danger';
+      this.message = {
+        text: error['message'],
+        type: 'danger'
+      };
     });
   }
 

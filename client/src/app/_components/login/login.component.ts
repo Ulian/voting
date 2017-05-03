@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AccountService } from '../_services/index';
+import { AccountService } from '../../_services/index';
+
+import { LoginAccount, Message } from '../../_models/index';
+
 
 @Component({
   selector: 'app-login',
@@ -11,8 +14,7 @@ import { AccountService } from '../_services/index';
 export class LoginComponent {
   title = 'Login into an account';
   account: any = {};
-  message: string;
-  messageType: string;
+  message: Message;
   loading = false;
 
   constructor(
@@ -20,18 +22,22 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  login(login, password) {
+  login(loginAccount: LoginAccount) {
     this.loading = true;
-    this.accountService.login(login, password)
+    this.accountService.login(loginAccount)
       .then(response => {
-        this.message = response['message'];
-        this.messageType = 'success';
+        this.message = {
+          text: response['message'],
+          type: 'success'
+        };
         this.account = {};
         this.router.navigate(['/list']);
       })
       .catch(error => {
-        this.message = error['message'];
-        this.messageType = 'danger';
+        this.message = {
+          text: error['message'],
+          type: 'danger'
+        };
         this.loading = false;
       });
   }

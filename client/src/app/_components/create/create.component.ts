@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { PollService } from '../_services/index';
+import { PollService } from '../../_services/index';
+
+import { Message } from '../../_models/index';
+
 
 @Component({
   selector: 'app-create',
@@ -10,11 +13,10 @@ import { PollService } from '../_services/index';
 })
 
 export class CreateComponent {
-  title= 'Create a poll';
+  title = 'Create a poll';
   question: string;
   options: string[] = ['', ''];
-  message: string;
-  messageType: string;
+  message: Message;
 
   constructor(
     private http: Http,
@@ -30,13 +32,17 @@ export class CreateComponent {
 
     this.pollService.createPoll(this.question, filteredOptions)
       .then(response => {
-        this.message = response['message'];
-        this.messageType = 'success';
+        this.message = {
+          text: response['message'],
+          type: 'success'
+        };
         this.router.navigate(['/profile']);
       })
       .catch(error => {
-        this.message = error['message'];
-        this.messageType = 'danger';
+        this.message = {
+          text: error['message'],
+          type: 'danger'
+        };
       });
   }
 

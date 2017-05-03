@@ -13,7 +13,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
           <li routerLinkActive="active"><a routerLink="/list">List</a></li>
-          <li class="pointer"><a (click)="changeLocale()">{{ localeText }}</a></li>
+          <li><a>
+            <img class="pointer" (click)="changeLocale('en')" src="https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-usa2x.png" width="16" heigth="16">
+            <img class="pointer" (click)="changeLocale('es')" src="https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-spain2x.png" width="16" heigth="16">
+          </a></li>
+          <!--<li class="pointer"><a (click)="changeLocale('en')"><img src="https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-usa2x.png" width="16" heigth="16"></a></li>
+          <li class="pointer"><a (click)="changeLocale('es')"><img src="https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-spain2x.png" width="16" heigth="16"></a></li>-->
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active" *ngIf="!isLogged()"><a routerLink="/login">Login</a></li>

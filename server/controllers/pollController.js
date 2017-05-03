@@ -21,7 +21,7 @@ pollMethods.getPolls = (req, res) => {
 pollMethods.create = (req, res) => {
   const { token } = req.body
 
-  if (token === undefined) {
+  if (token === undefined || token === null) {
     return res.status(400).json({ message: res.__('NEED_TO_BE_LOGGED') })
   }
 

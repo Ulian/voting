@@ -1,2 +1,3 @@
-export * from './account.service';
-export * from './poll.service';
+export * from './account/account.service';
+export * from './poll/poll.service';
+export * from './locale/locale.service'
