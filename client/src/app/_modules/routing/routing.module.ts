@@ -10,13 +10,15 @@ import { PollListComponent,
          CreateComponent,
          ProfileComponent } from '../../_components/index';
 
+import { AllowLoggedIn, DenyLoggedIn } from '../../_guards/index';
+
 const appRoutes: Routes = [
   { path: 'list', component: PollListComponent },
   { path: 'poll/:id', component: PollDetailsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'create', component: CreateComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'login', component: LoginComponent, canActivate: [DenyLoggedIn] },
+  { path: 'register', component: RegisterComponent, canActivate: [DenyLoggedIn] },
+  { path: 'create', component: CreateComponent, canActivate: [AllowLoggedIn] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AllowLoggedIn] },
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: '**', component: PollListComponent }
 ];

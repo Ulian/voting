@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, RequestMethod} from '@angular/http';
 
+import { AppConfig } from '../../app.config';
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PollService {
-  private apiUrl = 'http://localhost/api';
   private headers = new Headers({'Content-Type': 'application/json' });
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private config: AppConfig
+  ) { }
 
   getPolls(): Promise<Array<Object>> {
     return this.http
-      .get(`${this.apiUrl}/polls`, { withCredentials: true })
+      .get(`${this.config.api}/polls`, { withCredentials: true })
       .toPromise()
       .then(response => {
         return response.json();
@@ -22,7 +26,7 @@ export class PollService {
 
   getPoll(id): Promise<Array<Object>> {
     return this.http
-      .get(`${this.apiUrl}/poll/${id}`, { withCredentials: true })
+      .get(`${this.config.api}/poll/${id}`, { withCredentials: true })
       .toPromise()
       .then(response => {
         return response.json();
@@ -38,7 +42,7 @@ export class PollService {
     };
 
     return this.http
-      .post(`${this.apiUrl}/poll`, poll, { headers: this.headers, withCredentials: true })
+      .post(`${this.config.api}/poll`, poll, { headers: this.headers, withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         return response.json();
@@ -56,7 +60,7 @@ export class PollService {
       headers: new Headers({ withCredentials: true})
     });
     return this.http
-      .request(`${this.apiUrl}/poll/${id}`, options)
+      .request(`${this.config.api}/poll/${id}`, options)
       .toPromise()
       .then((response: Response) => {
         return response.json();
@@ -70,7 +74,7 @@ export class PollService {
     };
 
     return this.http
-      .post(`${this.apiUrl}/poll/${id}/${name}`, body, { withCredentials: true })
+      .post(`${this.config.api}/poll/${id}/${name}`, body, { withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         return response.json();
@@ -85,7 +89,7 @@ export class PollService {
     };
 
     return this.http
-      .post(`${this.apiUrl}/poll/${id}`, body, { withCredentials: true })
+      .post(`${this.config.api}/poll/${id}`, body, { withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         return response.json();

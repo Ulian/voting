@@ -3,18 +3,22 @@ import { Http, Response, Headers} from '@angular/http';
 
 import { NewAccount, LoginAccount } from '../../_models/index';
 
+import { AppConfig } from '../../app.config';
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AccountService {
-  private apiUrl = 'http://localhost/api';
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private config: AppConfig
+  ) { }
 
   register(newAccount: NewAccount): Promise<Object> {
     return this.http
-      .post(`${this.apiUrl}/register`, newAccount, { headers: this.headers, withCredentials: true })
+      .post(`${this.config.api}/register`, newAccount, { headers: this.headers, withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         return response.json();
@@ -24,7 +28,7 @@ export class AccountService {
 
   login(loginAccount: LoginAccount): Promise<Object> {
     return this.http
-      .post(`${this.apiUrl}/login`, loginAccount, { headers: this.headers, withCredentials: true })
+      .post(`${this.config.api}/login`, loginAccount, { headers: this.headers, withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         const r = response.json();
@@ -43,12 +47,16 @@ export class AccountService {
       'token': localStorage.getItem('loggedUser')
     };
     return this.http
-      .post(`${this.apiUrl}/profile`, account, { headers: this.headers, withCredentials: true })
+      .post(`${this.config.api}/profile`, account, { headers: this.headers, withCredentials: true })
       .toPromise()
       .then((response: Response) => {
         return response.json();
       })
       .catch(this.handleError);
+  }
+
+  isLogged () {
+    return (localStorage.getItem('loggedUser') !== null);
   }
 
   private handleError(error: any): Promise<any> {

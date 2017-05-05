@@ -19,10 +19,10 @@
           </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li routerLinkActive="active" *ngIf="!isLogged()"><a routerLink="/login" translate>LOGIN</a></li>
-        <li routerLinkActive="active" *ngIf="!isLogged()"><a routerLink="/register" translate>REGISTER</a></li>
-        <li routerLinkActive="active" *ngIf="isLogged()"><a routerLink="/create" translate>CREATE_POLL</a></li>
-        <li routerLinkActive="active" *ngIf="isLogged()"><a routerLink="/profile" translate>PROFILE</a></li>
+        <li routerLinkActive="active" *ngIf="!loggedIn()"><a routerLink="/login" translate>LOGIN</a></li>
+        <li routerLinkActive="active" *ngIf="!loggedIn()"><a routerLink="/register" translate>REGISTER</a></li>
+        <li routerLinkActive="active" *ngIf="loggedIn()"><a routerLink="/create" translate>CREATE_POLL</a></li>
+        <li routerLinkActive="active" *ngIf="loggedIn()"><a routerLink="/profile" translate>PROFILE</a></li>
       </ul>
     </div>
   </div>

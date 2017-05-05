@@ -21,8 +21,17 @@ import { PollService,
          AccountService,
          LocaleService } from './_services/index';
 
+import { AllowLoggedIn, DenyLoggedIn } from './_guards/index';
+
+
+import { AppConfig } from './app.config';
+
 import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { Http } from '@angular/http';
+
+export function HttpLoaderFactory(http: Http) {
+    return new TranslateStaticLoader(http, '../assets/locales', '.json');
+}
 
 @NgModule({
   imports: [
@@ -36,7 +45,7 @@ import { Http } from '@angular/http';
     RouterModule,
     TranslateModule.forRoot({
         provide: TranslateLoader,
-        useFactory: (http: Http) => new TranslateStaticLoader(http, '../assets/locales', '.json'),
+        useFactory: HttpLoaderFactory,
         deps: [Http]
     })
   ],
@@ -52,7 +61,10 @@ import { Http } from '@angular/http';
   providers: [
     PollService,
     AccountService,
-    LocaleService
+    LocaleService,
+    AllowLoggedIn,
+    DenyLoggedIn,
+    AppConfig
   ],
   bootstrap: [AppComponent]
 })

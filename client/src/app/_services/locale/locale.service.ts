@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-
 import { Http } from '@angular/http';
+
+import { AppConfig } from '../../app.config';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LocaleService {
-  private apiUrl = 'http://localhost/api';
-
   constructor(
-    private http: Http
+    private http: Http,
+    private config: AppConfig
   ) { }
 
   changeLocale(locale): Promise<Object> {
     return this.http
-      .get(`${this.apiUrl}/locale/${locale}`, { withCredentials: true })
+      .get(`${this.config.api}/locale/${locale}`, { withCredentials: true })
       .toPromise()
       .then((response) => {
         return response.json();

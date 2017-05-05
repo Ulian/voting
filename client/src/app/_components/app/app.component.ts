@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LocaleService, TranslateService } from '../../_services/index';
+import { LocaleService, TranslateService, AccountService } from '../../_services/index';
 
 import * as moment from 'moment';
+
+import { Observable, Subscribable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -10,25 +12,21 @@ import * as moment from 'moment';
 })
 
 export class AppComponent implements OnInit {
-  private apiUrl = 'http://localhost/api';
-
-  logged = false;
   locale = 'es';
 
   constructor(
     private localeService: LocaleService,
-    private translateService: TranslateService
-  ) {}
+    private translateService: TranslateService,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
     this.translateService.setDefaultLang(this.locale);
     moment.locale(this.locale);
-    this.isLogged();
   }
 
-  isLogged () {
-    this.logged = (localStorage.getItem('loggedUser') !== null);
-    return this.logged;
+  loggedIn() {
+    return this.accountService.isLogged();
   }
 
   changeLocale(locale) {
