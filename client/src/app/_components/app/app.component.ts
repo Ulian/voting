@@ -17,8 +17,7 @@ export class AppComponent implements OnInit {
   constructor(
     private localeService: LocaleService,
     private translateService: TranslateService,
-    private accountService: AccountService
-  ) { }
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.translateService.setDefaultLang(this.locale);

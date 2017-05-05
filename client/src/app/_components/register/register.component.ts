@@ -17,8 +17,7 @@ export class RegisterComponent {
 
   constructor(
     private accountService: AccountService,
-    private router: Router
-  ) { }
+    private router: Router) { }
 
   register(newAccount: NewAccount) {
     this.loading = true;

@@ -18,8 +18,7 @@ export class LoginComponent {
 
   constructor(
     private accountService: AccountService,
-    private router: Router
-  ) {}
+    private router: Router) { }
 
   login(loginAccount: LoginAccount) {
     this.loading = true;

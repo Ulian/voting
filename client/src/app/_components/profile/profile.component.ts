@@ -9,9 +9,7 @@ import { AccountService } from '../../_services/index';
 export class ProfileComponent implements OnInit {
   account: object = {};
 
-  constructor(
-    private accountService: AccountService
-  ) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit() {
     this.accountService.profile()

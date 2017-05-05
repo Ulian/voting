@@ -13,8 +13,7 @@ export class AccountService {
 
   constructor(
     private http: Http,
-    private config: AppConfig
-  ) { }
+    private config: AppConfig) { }
 
   register(newAccount: NewAccount): Promise<Object> {
     return this.http

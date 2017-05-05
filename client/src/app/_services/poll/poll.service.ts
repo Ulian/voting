@@ -11,8 +11,7 @@ export class PollService {
 
   constructor(
     private http: Http,
-    private config: AppConfig
-  ) { }
+    private config: AppConfig) { }
 
   getPolls(): Promise<Array<Object>> {
     return this.http

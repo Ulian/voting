@@ -9,8 +9,7 @@ import 'rxjs/add/operator/toPromise';
 export class LocaleService {
   constructor(
     private http: Http,
-    private config: AppConfig
-  ) { }
+    private config: AppConfig) { }
 
   changeLocale(locale): Promise<Object> {
     return this.http

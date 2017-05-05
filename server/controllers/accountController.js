@@ -84,7 +84,7 @@ accountMethods.login = (req, res) => {
 
 accountMethods.profile = (req, res) => {
   const { token } = req.body
-  if (token !== undefined || token !== null) {
+  if (token !== undefined && token !== null) {
     const user = userHelper.decode(token)
 
     Poll.find({ $query: {owner: user._id}, $orderby: { created: -1 } })

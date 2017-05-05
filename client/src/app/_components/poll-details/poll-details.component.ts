@@ -30,13 +30,13 @@ export class PollDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private pollService: PollService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.pollId = params['id'];
     });
-  }
 
-  ngOnInit() {
     const token = localStorage.getItem('loggedUser');
 
     if (token !== null) {

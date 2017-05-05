@@ -8,8 +8,7 @@ export class AllowLoggedIn implements CanActivate {
 
     constructor(
       private router: Router,
-      private accountService: AccountService
-    ) { }
+      private accountService: AccountService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       if (this.accountService.isLogged()) {
