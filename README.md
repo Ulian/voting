@@ -8,7 +8,7 @@ cd voting
 npm install
 cd client
 npm install
-npm build
+ng build
 cd ..
 npm start
 ```

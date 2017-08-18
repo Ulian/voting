@@ -15,7 +15,7 @@ if (!process.env.NODE_TEST) {
 
 const port = process.env.PORT || config.SERVER.PORT
 
-let app = express()
+const app = express()
 
 i18n.configure({
   locales: ['es', 'en'],
