@@ -10,7 +10,7 @@
     "crypto-js": "^3.1.9-1",
     "express": "^4.15.2",
     "i18n": "^0.8.3",
-    "jsonwebtoken": "^7.3.0",
+    "jsonwebtoken": "^8.0.0",
     "moment": "^2.17.1",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.6",
