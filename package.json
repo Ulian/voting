@@ -17,7 +17,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "request-ip": "^2.0.1"
+    "request-ip": "^2.0.1",
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -31,7 +32,9 @@
   },
   "scripts": {
     "test": "set NODE_TEST=1;&& mocha test/**/*.js -c -t 120000",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Ulian",
   "license": "ISC",
@@ -42,5 +45,6 @@
     "type": "git",
     "url": "git+https://github.com/Ulian/voting.git"
   },
-  "homepage": "https://github.com/Ulian/voting#readme"
+  "homepage": "https://github.com/Ulian/voting#readme",
+  "snyk": true
 }
